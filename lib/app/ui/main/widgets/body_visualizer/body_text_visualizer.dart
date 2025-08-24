@@ -23,12 +23,6 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
     _verticalScrollController = ScrollController();
     _horizontalScrollController = ScrollController();
     _lineNumberScrollController = ScrollController();
-
-    _verticalScrollController.addListener(() {
-      if (_lineNumberScrollController.hasClients) {
-        _lineNumberScrollController.jumpTo(_verticalScrollController.offset);
-      }
-    });
   }
 
   @override
@@ -37,6 +31,13 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
     _horizontalScrollController.dispose();
     _lineNumberScrollController.dispose();
     super.dispose();
+  }
+
+  void _syncScroll(double offset) {
+    if (_lineNumberScrollController.hasClients && 
+        _lineNumberScrollController.offset != offset) {
+      _lineNumberScrollController.jumpTo(offset);
+    }
   }
 
   @override
@@ -75,7 +76,6 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
               child: SingleChildScrollView(
                 controller: _lineNumberScrollController,
                 physics: const NeverScrollableScrollPhysics(),
-
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -113,13 +113,21 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
             child: SingleChildScrollView(
               controller: _horizontalScrollController,
               scrollDirection: Axis.horizontal,
-              child: SingleChildScrollView(
-                controller: _verticalScrollController,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SelectableText(
-                    widget.content,
-                    style: textStyle,
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification notification) {
+                  if (notification is ScrollUpdateNotification) {
+                    _syncScroll(notification.metrics.pixels);
+                  }
+                  return false;
+                },
+                child: SingleChildScrollView(
+                  controller: _verticalScrollController,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SelectableText(
+                      widget.content,
+                      style: textStyle,
+                    ),
                   ),
                 ),
               ),
