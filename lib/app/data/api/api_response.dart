@@ -1,0 +1,53 @@
+import 'package:flutter/foundation.dart';
+
+class ApiResponse {
+  final int statusCode;
+  final Map<String, String> headers;
+  final Map<String, String> cookies;
+  final String? body;
+
+  ApiResponse({
+    required this.statusCode,
+    this.headers = const {},
+    this.cookies = const {},
+    this.body,
+  });
+
+  ApiResponse copyWith({
+    int? statusCode,
+    Map<String, String>? headers,
+    Map<String, String>? cookies,
+    String? body,
+  }) {
+    return ApiResponse(
+      statusCode: statusCode ?? this.statusCode,
+      headers: headers ?? this.headers,
+      cookies: cookies ?? this.cookies,
+      body: body ?? this.body,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ApiResponse &&
+        other.statusCode == statusCode &&
+        mapEquals(other.headers, headers) &&
+        mapEquals(other.cookies, cookies) &&
+        other.body == body;
+  }
+
+  @override
+  int get hashCode {
+    return statusCode.hashCode ^
+        headers.hashCode ^
+        cookies.hashCode ^
+        body.hashCode;
+  }
+
+  @override
+  String toString() {
+    return '''ApiResponse(statusCode: $statusCode, headers: $headers, cookies: $cookies, body: $body)''';
+  }
+}
