@@ -20,6 +20,14 @@ class MainApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
+        dropdownMenuTheme: DropdownMenuThemeData(
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
+        ),
+
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

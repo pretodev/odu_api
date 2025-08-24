@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odu_api/app/data/api/url/api_url.dart';
 import 'package:odu_api/app/data/api/url/methods.dart';
+import 'package:odu_api/core/ui/widgets/select/select.dart';
 
 class EndpointPathField extends StatefulWidget {
   const EndpointPathField({
@@ -19,11 +20,8 @@ class EndpointPathField extends StatefulWidget {
 class _EndpointPathFieldState extends State<EndpointPathField> {
   final _pathController = TextEditingController();
 
-  DropdownMenuItem<ClassicHttpMethod> _buildDropdownMenuItem(
-    HttpMethodOptions option,
-  ) {
-    final data = ClassicHttpMethod(option);
-    final color = switch (option) {
+  Color _methodColor(ClassicHttpMethod method) {
+    return switch (method.method) {
       HttpMethodOptions.get => Colors.green,
       HttpMethodOptions.head => Colors.green,
       HttpMethodOptions.post => Colors.yellow,
@@ -32,22 +30,23 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
       HttpMethodOptions.delete => Colors.redAccent,
       HttpMethodOptions.options => Colors.blueGrey,
     };
-    return DropdownMenuItem(
+  }
+
+  SelectOption<HttpMethod> _buildSelectOption(
+    HttpMethodOptions option,
+  ) {
+    final data = ClassicHttpMethod(option);
+    return SelectOption(
+      label: data.name,
       value: data,
-      child: Text(
-        data.name,
-        style: TextStyle(
-          color: color,
-        ),
-      ),
     );
   }
 
-  HttpMethod method = ClassicHttpMethod(HttpMethodOptions.get);
+  HttpMethod _method = ClassicHttpMethod(HttpMethodOptions.get);
 
   void _setMethod(HttpMethod? value) {
     if (value == null) return;
-    setState(() => method = value);
+    setState(() => _method = value);
     widget.onChanged?.call(
       widget.url.copyWith(
         method: value,
@@ -59,6 +58,7 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
   @override
   void initState() {
     super.initState();
+
     _pathController.addListener(() {
       widget.onChanged?.call(
         widget.url.copyWith(
@@ -70,33 +70,36 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _pathController,
-      decoration: InputDecoration(
-        hintText: "caminho/do/endpoint",
-
-        prefixIcon: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(width: 8.0),
-            DropdownButton(
-              value: method,
-              items: HttpMethodOptions.values
-                  .map(_buildDropdownMenuItem)
-                  .toList(),
-              onChanged: _setMethod,
-              isDense: true,
-              underline: SizedBox.shrink(),
-            ),
-            Text(
-              "${widget.url.base}/",
-              style: TextStyle(
-                color: Colors.grey,
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _pathController,
+            decoration: InputDecoration(
+              hintText: "caminho/do/endpoint",
+              prefixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(width: 8.0),
+                  Select(
+                    value: _method,
+                    options: HttpMethodOptions.values
+                        .map(_buildSelectOption)
+                        .toList(),
+                    onChanged: _setMethod,
+                  ),
+                  Text(
+                    "${widget.url.base}/",
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
