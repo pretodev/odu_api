@@ -17,37 +17,51 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
   late final ScrollController _horizontalScrollController;
   late final ScrollController _lineNumberScrollController;
 
+  static const _fontSize = 14.0;
+  static const _lineHeight = 1.2;
+  static const _vPad = 16.0;
+
   @override
   void initState() {
     super.initState();
     _verticalScrollController = ScrollController();
     _horizontalScrollController = ScrollController();
     _lineNumberScrollController = ScrollController();
+
+    _verticalScrollController.addListener(_onVerticalScroll);
+  }
+
+  void _onVerticalScroll() {
+    if (!_lineNumberScrollController.hasClients) return;
+
+    final max = _lineNumberScrollController.position.maxScrollExtent;
+    final target = _verticalScrollController.offset.clamp(0.0, max);
+
+    if ((_lineNumberScrollController.offset - target).abs() > 0.5) {
+      _lineNumberScrollController.jumpTo(target);
+    }
   }
 
   @override
   void dispose() {
+    _verticalScrollController.removeListener(_onVerticalScroll);
     _verticalScrollController.dispose();
     _horizontalScrollController.dispose();
     _lineNumberScrollController.dispose();
     super.dispose();
   }
 
-  void _syncScroll(double offset) {
-    if (_lineNumberScrollController.hasClients && 
-        _lineNumberScrollController.offset != offset) {
-      _lineNumberScrollController.jumpTo(offset);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final lines = widget.content.split('\n');
+
     const textStyle = TextStyle(
       fontFamily: 'monospace',
-      fontSize: 14,
-      height: 1.2,
+      fontSize: _fontSize,
+      height: _lineHeight,
     );
+
+    final lineExtent = _fontSize * _lineHeight;
 
     return Container(
       decoration: BoxDecoration(
@@ -70,23 +84,23 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
               ),
             ),
             child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                scrollbars: false,
-              ),
+              behavior: ScrollConfiguration.of(
+                context,
+              ).copyWith(scrollbars: false),
               child: SingleChildScrollView(
                 controller: _lineNumberScrollController,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
-                    vertical: 16,
+                    vertical: _vPad,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: List.generate(
                       lines.length,
                       (index) => SizedBox(
-                        height: textStyle.fontSize! * (textStyle.height ?? 1.0),
+                        height: lineExtent,
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
@@ -113,20 +127,23 @@ class _BodyTextVisualizerState extends State<BodyTextVisualizer> {
             child: SingleChildScrollView(
               controller: _horizontalScrollController,
               scrollDirection: Axis.horizontal,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification notification) {
-                  if (notification is ScrollUpdateNotification) {
-                    _syncScroll(notification.metrics.pixels);
-                  }
-                  return false;
-                },
-                child: SingleChildScrollView(
-                  controller: _verticalScrollController,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: SelectableText(
-                      widget.content,
-                      style: textStyle,
+              physics: const ClampingScrollPhysics(),
+              child: SingleChildScrollView(
+                controller: _verticalScrollController,
+                physics: const ClampingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(_vPad),
+                  child: SelectableText(
+                    widget.content,
+                    style: textStyle,
+                    strutStyle: const StrutStyle(
+                      fontSize: _fontSize,
+                      height: _lineHeight,
+                      forceStrutHeight: true,
+                    ),
+                    textHeightBehavior: const TextHeightBehavior(
+                      applyHeightToFirstAscent: false,
+                      applyHeightToLastDescent: false,
                     ),
                   ),
                 ),
