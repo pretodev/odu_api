@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of "body_visualizer.dart";
 
 class BodyTextVisualizer extends StatelessWidget {
   const BodyTextVisualizer({

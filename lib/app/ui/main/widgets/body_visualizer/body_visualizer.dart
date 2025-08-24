@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:odu_api/app/data/api/api_response.dart';
-import 'package:odu_api/app/ui/main/widgets/body_visualizer/body_text_visualizer.dart';
+
+part 'body_html_visualizer.dart';
+part 'body_text_visualizer.dart';
 
 enum ViewMode { pretty, raw, preview }
 
@@ -88,7 +90,9 @@ class _BodyVisualizerState extends State<BodyVisualizer> {
 
     if (_currentViewMode == ViewMode.preview &&
         _currentContentType == ContentType.html) {
-      return _buildHtmlPreview();
+      return BodyHtmlVisualizer(
+        content: widget.response?.body ?? "",
+      );
     }
 
     final formattedContent = _formatContent(widget.response!.body);
@@ -107,37 +111,6 @@ class _BodyVisualizerState extends State<BodyVisualizer> {
             fontFamily: 'monospace',
             fontSize: 14,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHtmlPreview() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.web,
-              size: 48,
-              color: Colors.grey,
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Preview HTML não implementado',
-              style: TextStyle(color: Colors.grey),
-            ),
-            Text(
-              'Use o modo Pretty ou Raw para visualizar o conteúdo',
-              style: TextStyle(color: Colors.grey, fontSize: 12),
-            ),
-          ],
         ),
       ),
     );
