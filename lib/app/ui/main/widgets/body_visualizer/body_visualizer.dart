@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:odu_api/app/data/api/api_response.dart';
 
 part 'body_html_visualizer.dart';
