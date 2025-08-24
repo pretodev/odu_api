@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:odu_api/app/ui/main/main_screen.dart';
 
 void main() {
@@ -45,7 +46,9 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MainScreen(),
+      home: LoaderOverlay(
+        child: const MainScreen(),
+      ),
     );
   }
 }

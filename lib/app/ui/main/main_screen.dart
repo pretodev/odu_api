@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:odu_api/app/commands/send_request.dart';
 import 'package:odu_api/app/data/api/url/api_url.dart';
 import 'package:odu_api/app/data/api/url/methods.dart';
@@ -24,7 +25,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   Widget build(BuildContext context) {
     final sendRequest = ref.read(sendRequestProvider.notifier);
     final sendRequestResult = ref.watch(sendRequestProvider);
-
+    ref.listen(sendRequestProvider, (previous, next) {
+      if (next is AsyncLoading) {
+        return context.loaderOverlay.show();
+      }
+      return context.loaderOverlay.hide();
+    });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -57,11 +63,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             const SizedBox(height: 24.0),
             Expanded(
               child: BodyVisualizer(
-                response: sendRequestResult.when(
-                  data: (response) => response,
-                  loading: () => null,
-                  error: (error, stack) => null,
-                ),
+                response: switch (sendRequestResult) {
+                  AsyncData(value: final v) => v,
+                  _ => null,
+                },
               ),
             ),
           ],

@@ -5,3 +5,7 @@ formatter:
 
 linter:
   rules:
+
+analyzer:
+  plugins:
+    - custom_lint
