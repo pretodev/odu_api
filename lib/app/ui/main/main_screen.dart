@@ -3,6 +3,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:odu_api/app/commands/send_request.dart';
 import 'package:odu_api/app/data/api/url/api_url.dart';
 import 'package:odu_api/app/data/api/url/methods.dart';
+import 'package:odu_api/app/ui/main/widgets/body_visualizer/body_visualizer.dart';
 import 'package:odu_api/app/ui/main/widgets/endpoint_path_field.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
@@ -49,15 +50,20 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 ),
                 OutlinedButton(
                   onPressed: () {},
-                  child: Text('Salvar'),
+                  child: const Text('Salvar'),
                 ),
               ],
             ),
             const SizedBox(height: 24.0),
-            if (sendRequestResult is AsyncData)
-              Text(sendRequestResult.value.toString()),
-            if (sendRequestResult is AsyncError)
-              Text(sendRequestResult.error.toString()),
+            Expanded(
+              child: BodyVisualizer(
+                response: sendRequestResult.when(
+                  data: (response) => response,
+                  loading: () => null,
+                  error: (error, stack) => null,
+                ),
+              ),
+            ),
           ],
         ),
       ),

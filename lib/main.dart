@@ -35,6 +35,15 @@ class MainApp extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
           ),
         ),
+        segmentedButtonTheme: SegmentedButtonThemeData(
+          style: ButtonStyle(
+            shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ),
       ),
       home: const MainScreen(),
     );

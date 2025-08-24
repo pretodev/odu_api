@@ -1,17 +1,33 @@
 import 'package:flutter/foundation.dart';
 
-class ApiResponse {
-  final int statusCode;
-  final Map<String, String> headers;
-  final Map<String, String> cookies;
-  final String? body;
+enum ContentType { json, html, xml, text }
 
+class ApiResponse {
   ApiResponse({
     required this.statusCode,
     this.headers = const {},
     this.cookies = const {},
     this.body,
   });
+
+  final int statusCode;
+  final Map<String, String> headers;
+  final Map<String, String> cookies;
+  final String? body;
+
+  ContentType get contentType {
+    final contentType = headers['content-type']?.toLowerCase() ?? '';
+    if (contentType.contains('application/json')) {
+      return ContentType.json;
+    } else if (contentType.contains('text/html')) {
+      return ContentType.html;
+    } else if (contentType.contains('application/xml') ||
+        contentType.contains('text/xml')) {
+      return ContentType.xml;
+    } else {
+      return ContentType.text;
+    }
+  }
 
   ApiResponse copyWith({
     int? statusCode,
