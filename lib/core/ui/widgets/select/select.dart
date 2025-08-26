@@ -152,7 +152,7 @@ class _SelectState<T extends Object> extends State<Select<T>> {
         key: _buttonKey,
         onTap: _showOverlay,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             color: _isHovered ? Colors.grey.withValues(alpha: 0.1) : null,

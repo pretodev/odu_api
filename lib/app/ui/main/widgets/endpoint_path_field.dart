@@ -82,6 +82,7 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
               fontWeight: FontWeight.w400,
               color: Colors.black87,
             ),
+
             decoration: InputDecoration(
               contentPadding: EdgeInsets.zero,
               hintText: "caminho/do/endpoint",
@@ -90,6 +91,7 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
                 fontWeight: FontWeight.w400,
                 color: Colors.grey.withValues(alpha: 0.8),
               ),
+              isDense: true,
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -101,6 +103,7 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
                         .toList(),
                     onChanged: _setMethod,
                   ),
+                  SizedBox(width: 4.0),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 3.0,

@@ -48,13 +48,19 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                     },
                   ),
                 ),
-                ElevatedButton(
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    minimumSize: Size(100.0, 50.0),
+                  ),
                   onPressed: () {
                     sendRequest(_requestUrl);
                   },
                   child: const Text('Enviar'),
                 ),
                 OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: Size(100.0, 50.0),
+                  ),
                   onPressed: () {},
                   child: const Text('Salvar'),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:odu_api/app/ui/main/main_screen.dart';
 
@@ -20,20 +21,15 @@ class MainApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
         ),
-        dropdownMenuTheme: DropdownMenuThemeData(
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-          ),
-        ),
-
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            textStyle: GoogleFonts.firaCode(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -41,14 +37,23 @@ class MainApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            textStyle: GoogleFonts.firaCode(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
         segmentedButtonTheme: SegmentedButtonThemeData(
           style: ButtonStyle(
             shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+            textStyle: WidgetStatePropertyAll(
+              GoogleFonts.firaCode(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),
