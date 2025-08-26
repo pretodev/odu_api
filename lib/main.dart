@@ -59,6 +59,15 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
+        iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(
+            iconSize: 16.0,
+            padding: EdgeInsets.all(4.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+          ),
+        ),
       ),
       home: LoaderOverlay(
         child: const MainScreen(),

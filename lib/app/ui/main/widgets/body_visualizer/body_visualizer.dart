@@ -81,69 +81,54 @@ class _BodyVisualizerState extends State<BodyVisualizer> {
       );
     }
 
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.02),
-            spreadRadius: 1.0,
-            blurRadius: 0.0,
-            offset: Offset(0, 0),
-          ),
-        ],
-      ),
-      child: Column(
-        spacing: 12.0,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: 8.0,
-            children: [
-              SegmentedButton<ViewMode>(
-                showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment(
-                    value: ViewMode.pretty,
-                    label: Text('Pretty'),
-                  ),
-                  ButtonSegment(
-                    value: ViewMode.raw,
-                    label: Text('Raw'),
-                  ),
-                  ButtonSegment(
-                    value: ViewMode.preview,
-                    label: Text('Preview'),
-                  ),
-                ],
-                selected: {_currentViewMode},
-                onSelectionChanged: (selection) {
-                  setState(() => _currentViewMode = selection.first);
-                },
-              ),
-              Select(
-                value: _currentContentType,
-                onChanged: (value) {
-                  setState(() => _currentContentType = value);
-                },
-                options: [
-                  SelectOption(value: ContentType.json, label: 'JSON'),
-                  SelectOption(value: ContentType.html, label: 'HTML'),
-                  SelectOption(value: ContentType.xml, label: 'XML'),
-                  SelectOption(value: ContentType.text, label: 'Text'),
-                ],
-              ),
-            ],
-          ),
-          Expanded(
-            child: _buildContentViewer(),
-          ),
-        ],
-      ),
+    return Column(
+      spacing: 12.0,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 8.0,
+          children: [
+            SegmentedButton<ViewMode>(
+              showSelectedIcon: false,
+              segments: const [
+                ButtonSegment(
+                  value: ViewMode.pretty,
+                  label: Text('Pretty'),
+                ),
+                ButtonSegment(
+                  value: ViewMode.raw,
+                  label: Text('Raw'),
+                ),
+                ButtonSegment(
+                  value: ViewMode.preview,
+                  label: Text('Preview'),
+                ),
+              ],
+              selected: {_currentViewMode},
+              onSelectionChanged: (selection) {
+                setState(() => _currentViewMode = selection.first);
+              },
+            ),
+            Select(
+              value: _currentContentType,
+              onChanged: (value) {
+                setState(() => _currentContentType = value);
+              },
+              options: [
+                SelectOption(value: ContentType.json, label: 'JSON'),
+                SelectOption(value: ContentType.html, label: 'HTML'),
+                SelectOption(value: ContentType.xml, label: 'XML'),
+                SelectOption(value: ContentType.text, label: 'Text'),
+              ],
+            ),
+          ],
+        ),
+        Expanded(
+          child: _buildContentViewer(),
+        ),
+      ],
     );
   }
 }
