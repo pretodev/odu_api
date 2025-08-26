@@ -65,7 +65,9 @@ class _SelectOptionItemState<T extends Object>
           ),
           child: Text(
             widget.entry.label,
-            style: TextStyle(
+            style: GoogleFonts.firaCode(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
               color: widget.entry.color,
             ),
           ),

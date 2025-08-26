@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 part 'select_menu_item.dart';
@@ -161,9 +162,9 @@ class _SelectState<T extends Object> extends State<Select<T>> {
             children: [
               Text(
                 _currentValue?.label ?? '',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                style: GoogleFonts.firaCode(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                   color: _currentValue?.color,
                 ),
               ),

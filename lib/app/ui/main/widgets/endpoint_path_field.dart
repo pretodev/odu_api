@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:odu_api/app/data/api/url/api_url.dart';
 import 'package:odu_api/app/data/api/url/methods.dart';
 import 'package:odu_api/core/ui/widgets/select/select.dart';
@@ -76,8 +77,19 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
         Expanded(
           child: TextField(
             controller: _pathController,
+            style: GoogleFonts.firaCode(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87,
+            ),
             decoration: InputDecoration(
+              contentPadding: EdgeInsets.zero,
               hintText: "caminho/do/endpoint",
+              hintStyle: GoogleFonts.firaCode(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey.withValues(alpha: 0.8),
+              ),
               prefixIcon: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -89,10 +101,26 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
                         .toList(),
                     onChanged: _setMethod,
                   ),
-                  Text(
-                    "${widget.url.base}/",
-                    style: TextStyle(
-                      color: Colors.grey,
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 3.0,
+                      vertical: 4.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(
+                        color: Colors.grey.withValues(alpha: 0.3),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Text(
+                      "${widget.url.base}/",
+                      style: GoogleFonts.firaCode(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black87,
+                      ),
                     ),
                   ),
                 ],
