@@ -90,17 +90,19 @@ class _SelectState<T extends Object> extends State<Select<T>> {
               child: Material(
                 elevation: 8,
                 borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  height: 300,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  alignment: alignment,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [...options],
+                child: IntrinsicWidth(
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    alignment: alignment,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [...options],
+                    ),
                   ),
                 ),
               ),
