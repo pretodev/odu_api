@@ -1,10 +1,10 @@
 enum HttpMethodOptions {
   get,
+  head,
   post,
   put,
-  delete,
   patch,
-  head,
+  delete,
   options;
 
   const HttpMethodOptions();

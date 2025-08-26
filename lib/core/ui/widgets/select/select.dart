@@ -178,22 +178,3 @@ class _SelectState<T extends Object> extends State<Select<T>> {
     );
   }
 }
-
-class SelectOption<T extends Object> {
-  final T value;
-  final String label;
-
-  SelectOption({required this.value, required this.label});
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is SelectOption<T> &&
-        other.value == value &&
-        other.label == label;
-  }
-
-  @override
-  int get hashCode => value.hashCode ^ label.hashCode;
-}

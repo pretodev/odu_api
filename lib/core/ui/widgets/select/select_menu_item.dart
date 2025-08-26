@@ -1,5 +1,30 @@
 part of 'select.dart';
 
+class SelectOption<T extends Object> {
+  final T value;
+  final String label;
+  final Color? color;
+
+  SelectOption({
+    required this.value,
+    required this.label,
+    this.color,
+  });
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SelectOption<T> &&
+        other.value == value &&
+        other.label == label &&
+        other.color == color;
+  }
+
+  @override
+  int get hashCode => value.hashCode ^ label.hashCode ^ color.hashCode;
+}
+
 class SelectOptionItem<T extends Object> extends StatefulWidget {
   const SelectOptionItem({
     super.key,
@@ -34,6 +59,9 @@ class _SelectOptionItemState<T extends Object>
           ),
           child: Text(
             widget.entry.label,
+            style: TextStyle(
+              color: widget.entry.color,
+            ),
           ),
         ),
       ),

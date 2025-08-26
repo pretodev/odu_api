@@ -39,6 +39,7 @@ class _EndpointPathFieldState extends State<EndpointPathField> {
     return SelectOption(
       label: data.name,
       value: data,
+      color: _methodColor(data),
     );
   }
 
