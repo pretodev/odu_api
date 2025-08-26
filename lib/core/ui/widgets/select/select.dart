@@ -66,6 +66,7 @@ class _SelectState<T extends Object> extends State<Select<T>> {
             .map(
               (entry) => SelectOptionItem<T>(
                 entry: entry,
+                selected: entry.value == _currentValue?.value,
                 onClicked: () {
                   _hideOverlay();
                   widget.onChanged?.call(entry.value);
@@ -163,13 +164,13 @@ class _SelectState<T extends Object> extends State<Select<T>> {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Colors.green,
+                  color: _currentValue?.color,
                 ),
               ),
               Icon(
                 Symbols.expand_all_rounded,
                 size: 14,
-                color: Colors.green,
+                color: _currentValue?.color,
               ),
             ],
           ),
