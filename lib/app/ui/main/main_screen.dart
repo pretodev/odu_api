@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:odu_api/app/commands/save_endpoint.dart';
 import 'package:odu_api/app/commands/send_request.dart';
 import 'package:odu_api/app/data/api/url/api_url.dart';
 import 'package:odu_api/app/data/api/url/methods.dart';
+import 'package:odu_api/app/data/endpoints/endpoint.dart';
 import 'package:odu_api/app/ui/main/widgets/body_visualizer/body_visualizer.dart';
 import 'package:odu_api/app/ui/main/widgets/endpoint_path_field.dart';
 import 'package:odu_api/app/ui/main/widgets/explorer/explorer.dart';
@@ -82,7 +84,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                           style: OutlinedButton.styleFrom(
                             minimumSize: Size(100.0, 50.0),
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            final saveEndpoint = ref.read(
+                              saveEndpointProvider.notifier,
+                            );
+                            await saveEndpoint(Endpoint(_requestUrl));
+                          },
                           child: const Text('Salvar'),
                         ),
                       ],

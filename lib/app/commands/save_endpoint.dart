@@ -1,22 +1,20 @@
-import 'package:odu_api/app/data/api/api_response.dart';
-import 'package:odu_api/app/data/api/url/api_url.dart';
 import 'package:odu_api/app/data/data_providers.dart';
+import 'package:odu_api/app/data/endpoints/endpoint.dart';
 import 'package:odu_api/core/data/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'send_request.g.dart';
+part 'save_endpoint.g.dart';
 
 @riverpod
-class SendRequest extends _$SendRequest {
+class SaveEndpoint extends _$SaveEndpoint {
   @override
-  AsyncValue<ApiResponse> build() {
-    return AsyncData(ApiResponse(statusCode: 0));
+  AsyncValue<Unit> build() {
+    return const AsyncData(unit);
   }
 
-  Future<void> call(ApiUrl url) async {
+  Future<void> call(Endpoint endpoint) async {
     state = const AsyncLoading();
-    final apiRequest = ref.read(apiRequestProvider);
-    final result = await apiRequest.execute(url);
+    final result = await ref.read(endpointRepositoryProvider).store(endpoint);
     state = switch (result) {
       Ok() => AsyncData(result.value),
       Error() => AsyncError(
