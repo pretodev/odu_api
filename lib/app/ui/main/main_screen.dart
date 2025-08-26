@@ -33,7 +33,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     });
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -66,7 +66,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 24.0),
+            const SizedBox(height: 16.0),
             Expanded(
               child: BodyVisualizer(
                 response: switch (sendRequestResult) {
